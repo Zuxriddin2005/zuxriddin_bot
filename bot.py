@@ -22,14 +22,7 @@ async def clear(update, context):
     await update.message.reply_text("Tarix tozalandi!")
 
 async def handle(update, context):
-    uid = update.effective_user.id
-    msg = update.message.text
-    if uid not in history:
-        history[uid] = []
-    history[uid].append({"role": "user", "content": msg})
-    if len(history[uid]) > 20:
-        history[uid] = history[uid][-20:]
-    try:
+    uid = upd
         r = client.messages.create(model="claude-opus-4-5", max_tokens=1024, system=SYSTEM_PROMPT, messages=history[uid])
         reply = r.content[0].text
         history[uid].append({"role": "assistant", "content": reply})
@@ -41,4 +34,4 @@ app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("clear", clear))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle))
-app.run_polling()
+app.run_polling
